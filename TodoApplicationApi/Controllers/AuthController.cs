@@ -32,7 +32,18 @@ namespace TodoApplicationApi.Controllers
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            return Ok(user);
+            var response = new
+            {
+                data = new
+                {
+                    username = user.Username,
+                    passwordhash = user.PasswordHash,
+                    passwordSalt = user.PasswordSalt,
+
+                }
+            };
+
+            return Ok(response);
 
         }
 
@@ -50,7 +61,15 @@ namespace TodoApplicationApi.Controllers
             }
 
             string token = CreateToken(user);
-            return Ok(token);
+
+            var response = new
+            {
+                data = new
+                {
+                    token = token
+                }
+            };
+            return Ok(response);
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
