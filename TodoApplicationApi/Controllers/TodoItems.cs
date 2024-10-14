@@ -8,6 +8,7 @@ namespace TodoApplicationApi.Controllers
 {
     [ApiController]
     [Route("api/TodoItems")]
+    [Authorize]
     public class TodoItems : Controller
     {
         private readonly TodoApiDbContext dbContext;
@@ -26,7 +27,10 @@ namespace TodoApplicationApi.Controllers
         }
 
         [HttpGet]
+            [Authorize]
+
         [Route("{Id:guid}")]
+
         public async Task<IActionResult> GetSingleContact([FromRoute] Guid Id)
         {
             var todo = await dbContext.Todo.FirstOrDefaultAsync(t => t.Id == Id);
@@ -39,6 +43,8 @@ namespace TodoApplicationApi.Controllers
         }
 
         [HttpPost]
+            [Authorize]
+
         public async Task<IActionResult> AddTodo(AddTodoRequest addTodoRequest)
         {
             var existingTodo = await dbContext.Todo
@@ -68,6 +74,8 @@ namespace TodoApplicationApi.Controllers
         }
 
         [HttpPut]
+            [Authorize]
+
         [Route("{Id:guid}")]
 
         public async Task<IActionResult> UpdateTodo([FromRoute] Guid Id, UpdateTodoRequest updateTodoRequest) 
@@ -90,6 +98,8 @@ namespace TodoApplicationApi.Controllers
         }
 
         [HttpDelete]
+            [Authorize]
+
         [Route("{Id:guid}")]
 
         public async Task<IActionResult> DeleteTodo([FromRoute] Guid Id)
